@@ -1,7 +1,7 @@
 {
   "name": "qobuz-desktop-player",
   "productName": "Qobuz Desktop player",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Qobuz desktop player",
   "main": "index.js",
   "scripts": {
@@ -10,40 +10,33 @@
     "pack": "build --dir",
     "release": "build"
   },
-  "repository": "https://github.com/nlarche/qobuz-desktop-player",
+  "repository": "https://github.com/zenharbinger/qobuz-desktop-player",
   "keywords": [
     "Electron",
     "Qobuz"
   ],
   "author": {
-    "name": "nlarche",
-    "email": "nico060984@gmail.com"
+    "name": "zenharbinger",
+    "email": "matt@tros.org"
   },
   "license": "MIT",
   "dependencies": {
-    "babel-core": "^4.7.16",
+    "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.26.0",
-    "electron-config": "^2.0.0",
+    "electron-config": "^1.0.0",
     "electron-settings": "^4.0.2"
   },
   "devDependencies": {
-    "electron": "^26.0.0",
-    "electron-builder": "^24.6.3",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
     "electron-packager": "^17.1.2"
   },
   "build": {
-    "appId": "nlarche.qobuz.desktop.player",
-    "mac": {
-      "category": "public.app-category.music"
-    },
-    "win": {
-      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
-    },
+    "appId": "zenharbinger.qobuz.desktop.player",
     "linux": {
       "target": [
-        "AppImage",
-        "deb"
+        "AppImage"
       ]
     }
   }

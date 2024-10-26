@@ -11,7 +11,7 @@ import Action from './component/action';
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let tray;
-let willQuitApp = false;
+let willQuitApp = true;
 
 function createWindow() {
 
@@ -33,7 +33,7 @@ function createWindow() {
     mainWindow.on('close', function (e) {
         if (willQuitApp) {
             /* the user tried to quit the app */
-            mainWindow = null;
+            app.quit()
 
         } else {
             /* the user only tried to close the window */
