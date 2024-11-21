@@ -1,7 +1,7 @@
 {
   "name": "qobuz-desktop-player",
   "productName": "Qobuz Desktop player",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Qobuz desktop player avec Discord RPC",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "pack": "electron-builder --dir",
     "release": "electron-builder"
   },
-  "repository": "https://github.com/zenharbinger/qobuz-desktop-player",
+  "repository": "https://github.com/LeWarpy/qobuz-desktop-player",
   "keywords": [
     "Electron",
     "Qobuz"
