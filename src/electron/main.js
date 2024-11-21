@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import path from 'path';
 import url from 'url';
 
@@ -7,11 +7,17 @@ import appTray from './component/tray';
 import appMenu from './component/menu';
 import Action from './component/action';
 
+const RPC = require('discord-rpc');
+const clientId = '1309120404027080706';
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let tray;
 let willQuitApp = true;
+
+RPC.register(clientId);
+const rpc = new RPC.Client({ transport: 'ipc' });
 
 function createWindow() {
 
@@ -42,6 +48,10 @@ function createWindow() {
         }
     })
 
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.send('start-rpc');
+    });
+
     const action = new Action(mainWindow, config);
 
     tray = appTray(config, action);
@@ -52,7 +62,31 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+    createWindow();
+
+    rpc.on('ready', () => {
+        console.log('RPC connected');
+    });
+
+    ipcMain.on('update-discord-rpc', (event, data) => {
+        if (data) {
+            const icon = data.paused ? 'pause_bw' : 'play_bw';
+            const playing = data.paused ? 'En paused' : 'En lecture';
+
+            rpc.setActivity({
+                details: `${data.trackName} - ${data.artist}`,
+                state: `${data.startTime} ─ ${data.endTime}`,
+                largeImageKey: data.trackCover,
+                largeImageText: data.trackName,
+                smallImageKey: icon,
+                smallImageText: playing,
+                instance: false,
+                type: 2
+            });
+        }
+    });
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -78,6 +112,4 @@ app.on('before-quit', () => willQuitApp = true);;
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-
-
-
+rpc.login({ clientId }).catch(console.error);
