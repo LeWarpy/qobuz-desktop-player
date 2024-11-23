@@ -1,7 +1,7 @@
 {
   "name": "qobuz-desktop-player",
   "productName": "Qobuz Desktop player",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Qobuz desktop player avec Discord RPC",
   "main": "index.js",
   "scripts": {
@@ -32,6 +32,9 @@
   },
   "build": {
     "appId": "lewarpy.qobuz.desktop.player",
+    "mac": {
+			"category": "public.app-category.music"
+		},
     "linux": {
       "target": [
         "AppImage"
