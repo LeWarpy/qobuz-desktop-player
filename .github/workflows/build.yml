@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Prepare for app notarization
+      - name: Prepare for app notarization (macOS)
         if: startsWith(matrix.os, 'macos')
         run: |
           mkdir -p ~/private_keys/
@@ -33,5 +33,5 @@ jobs:
           github_token: ${{ secrets.github_token }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
-          API_KEY_ID: ${{ secrets.api_key_id }}
-          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}

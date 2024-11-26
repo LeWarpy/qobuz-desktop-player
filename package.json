@@ -1,8 +1,8 @@
 {
   "name": "qobuz-desktop-player",
   "productName": "Qobuz Desktop player",
-  "version": "0.1.5",
-  "description": "Qobuz desktop player avec Discord RPC",
+  "version": "0.1.6",
+  "description": "Unofficial Qobuz desktop player with Discord RPC",
   "main": "index.js",
   "scripts": {
     "postinstall": "install-app-deps",
@@ -28,6 +28,7 @@
     "electron-updater": "^6.3.9"
   },
   "devDependencies": {
+    "@electron/notarize": "^2.5.0",
     "electron": "^33.0.2",
     "electron-builder": "^25.1.8",
     "electron-builder-notarize": "^1.5.2",
@@ -44,6 +45,7 @@
     "afterSign": "electron-builder-notarize",
     "mac": {
       "hardenedRuntime": true,
+      "entitlements": "./build/entitlements.mac.plist",
       "category": "public.app-category.music"
     },
     "linux": {
