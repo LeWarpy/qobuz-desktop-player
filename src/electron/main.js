@@ -1,12 +1,14 @@
 import { app, ipcMain, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import url from 'url';
 
 import getConfig from './config';
 import appTray from './component/tray';
-import appMenu from './component/menu';
 import Action from './component/action';
 
+autoUpdater.logger = require("electron-log")
+autoUpdater.logger.transports.file.level = "info"
 const RPC = require('discord-rpc');
 const clientId = '1309120404027080706';
 
@@ -55,15 +57,17 @@ function createWindow() {
     const action = new Action(mainWindow, config);
 
     tray = appTray(config, action);
-    appMenu(config, action);
-
 }
+
+autoUpdater.autoDownload = true;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
     createWindow();
+
+    autoUpdater.checkForUpdatesAndNotify();
 
     rpc.on('ready', () => {
         console.log('RPC connected');
@@ -72,7 +76,7 @@ app.on('ready', () => {
     ipcMain.on('update-discord-rpc', (event, data) => {
         if (data) {
             const icon = data.paused ? 'pause_bw' : 'play_bw';
-            const playing = data.paused ? 'En paused' : 'En lecture';
+            const playing = data.paused ? 'En pause' : 'En lecture';
 
             rpc.setActivity({
                 details: `${data.trackName} - ${data.artist}`,
@@ -113,3 +117,8 @@ app.on('before-quit', () => willQuitApp = true);;
 // code. You can also put them in separate files and require them here.
 
 rpc.login({ clientId }).catch(console.error);
+
+ipcMain.handle('relaunch-app', () => {
+    app.relaunch();
+    app.exit();
+});
