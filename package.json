@@ -1,7 +1,7 @@
 {
   "name": "qobuz-desktop-player",
   "productName": "Qobuz Desktop player",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Unofficial Qobuz desktop player with Discord RPC",
   "main": "index.js",
   "scripts": {
